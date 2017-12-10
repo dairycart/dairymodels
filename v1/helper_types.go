@@ -60,10 +60,16 @@ type ListResponse struct {
 	Data  interface{} `json:"data"`
 }
 
+var _ = error(new(ErrorResponse))
+
 // ErrorResponse is a handy struct we can respond with in the event we have an error to report
 type ErrorResponse struct {
 	Status  int    `json:"status"`
 	Message string `json:"message"`
+}
+
+func (e *ErrorResponse) Error() string {
+	return e.Message
 }
 
 // QueryFilter represents a query filter
