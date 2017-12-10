@@ -9,8 +9,8 @@ type ProductOption struct {
 	ProductRootID uint64    `json:"product_root_id"` // product_root_id
 	CreatedOn     time.Time `json:"created_on"`      // created_on
 	ID            uint64    `json:"id"`              // id
-	ArchivedOn    NullTime  `json:"archived_on"`     // archived_on
-	UpdatedOn     NullTime  `json:"updated_on"`      // updated_on
+	ArchivedOn    *NullTime `json:"archived_on"`     // archived_on
+	UpdatedOn     *NullTime `json:"updated_on"`      // updated_on
 	Name          string    `json:"name"`            // name
 
 	// useful for responses
@@ -19,7 +19,7 @@ type ProductOption struct {
 
 type ProductOptionListResponse struct {
 	ListResponse
-	ProductOptions []ProductOption `json: "product_options"`
+	ProductOptions []ProductOption `json:"product_options"`
 }
 
 // ProductOptionCreationInput is a struct to use for creating product options

@@ -6,7 +6,7 @@ import (
 
 // PasswordResetToken represents a Dairycart password reset token
 type PasswordResetToken struct {
-	PasswordResetOn NullTime  `json:"password_reset_on"` // password_reset_on
+	PasswordResetOn *NullTime `json:"password_reset_on"` // password_reset_on
 	Token           string    `json:"token"`             // token
 	ID              uint64    `json:"id"`                // id
 	CreatedOn       time.Time `json:"created_on"`        // created_on
@@ -16,5 +16,5 @@ type PasswordResetToken struct {
 
 type PasswordResetTokenListResponse struct {
 	ListResponse
-	PasswordResetTokens []PasswordResetToken `json: "password_reset_tokens"`
+	PasswordResetTokens []PasswordResetToken `json:"password_reset_tokens"`
 }

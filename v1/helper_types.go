@@ -27,8 +27,15 @@ type NullTime struct {
 
 // MarshalText satisfies the encoding.TestMarshaler interface
 func (nt NullTime) MarshalText() ([]byte, error) {
+	if nt.Time.IsZero() {
+		return nil, nil
+	}
 	if nt.Valid {
-		return []byte(nt.Time.Format(timeLayout)), nil
+		ft := nt.Time.Format(timeLayout)
+		if ft == "0001-01-01T00:00:00Z" {
+			return nil, nil
+		}
+		return []byte(ft), nil
 	}
 	return nil, nil
 }

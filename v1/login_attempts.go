@@ -14,5 +14,5 @@ type LoginAttempt struct {
 
 type LoginAttemptListResponse struct {
 	ListResponse
-	LoginAttempts []LoginAttempt `json: "login_attempts"`
+	LoginAttempts []LoginAttempt `json:"login_attempts"`
 }

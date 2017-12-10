@@ -31,9 +31,9 @@ type Product struct {
 	Cost               float64   `json:"cost"`                 // cost
 	ID                 uint64    `json:"id"`                   // id
 	PackageHeight      float64   `json:"package_height"`       // package_height
-	ArchivedOn         NullTime  `json:"archived_on"`          // archived_on
+	ArchivedOn         *NullTime `json:"archived_on"`          // archived_on
 	OptionSummary      string    `json:"option_summary"`       // option_summary
-	UpdatedOn          NullTime  `json:"updated_on"`           // updated_on
+	UpdatedOn          *NullTime `json:"updated_on"`           // updated_on
 	UPC                string    `json:"upc"`                  // upc
 
 	// useful for responses
@@ -42,7 +42,7 @@ type Product struct {
 
 type ProductListResponse struct {
 	ListResponse
-	Products []Product `json: "products"`
+	Products []Product `json:"products"`
 }
 
 // ProductCreationInput is a struct that represents a product creation body
@@ -70,7 +70,7 @@ type ProductCreationInput struct {
 	Cost               float64                      `json:"cost"`                 // cost
 	PackageHeight      float64                      `json:"package_height"`       // package_height
 	OptionSummary      string                       `json:"option_summary"`       // option_summary
-	UpdatedOn          NullTime                     `json:"updated_on"`           // updated_on
+	UpdatedOn          *NullTime                    `json:"updated_on"`           // updated_on
 	UPC                string                       `json:"upc"`                  // upc
 	Options            []ProductOptionCreationInput `json:"options"`
 }

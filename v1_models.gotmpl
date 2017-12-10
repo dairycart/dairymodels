@@ -47,7 +47,7 @@ type {{ $modelName }} struct {
 
 type {{ $modelName }}ListResponse struct {
     ListResponse
-    {{ $modelName }}s []{{ $modelName }} `json: "{{ snake .Table.Name }}"`
+    {{ $modelName }}s []{{ $modelName }} `json:"{{ snake .Table.Name }}"`
 }
 
 {{ if eq $modelName "Product" }}

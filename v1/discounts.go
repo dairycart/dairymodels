@@ -11,10 +11,10 @@ type Discount struct {
 	LimitedUse    bool      `json:"limited_use"`    // limited_use
 	RequiresCode  bool      `json:"requires_code"`  // requires_code
 	DiscountType  string    `json:"discount_type"`  // discount_type
-	ArchivedOn    NullTime  `json:"archived_on"`    // archived_on
+	ArchivedOn    *NullTime `json:"archived_on"`    // archived_on
 	Code          string    `json:"code"`           // code
-	ExpiresOn     NullTime  `json:"expires_on"`     // expires_on
-	UpdatedOn     NullTime  `json:"updated_on"`     // updated_on
+	ExpiresOn     *NullTime `json:"expires_on"`     // expires_on
+	UpdatedOn     *NullTime `json:"updated_on"`     // updated_on
 	StartsOn      time.Time `json:"starts_on"`      // starts_on
 	CreatedOn     time.Time `json:"created_on"`     // created_on
 	NumberOfUses  uint64    `json:"number_of_uses"` // number_of_uses
@@ -24,5 +24,5 @@ type Discount struct {
 
 type DiscountListResponse struct {
 	ListResponse
-	Discounts []Discount `json: "discounts"`
+	Discounts []Discount `json:"discounts"`
 }

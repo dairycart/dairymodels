@@ -15,5 +15,5 @@ type WebhookExecutionLog struct {
 
 type WebhookExecutionLogListResponse struct {
 	ListResponse
-	WebhookExecutionLogs []WebhookExecutionLog `json: "webhook_execution_logs"`
+	WebhookExecutionLogs []WebhookExecutionLog `json:"webhook_execution_logs"`
 }

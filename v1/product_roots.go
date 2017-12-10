@@ -8,7 +8,7 @@ import (
 type ProductRoot struct {
 	AvailableOn        time.Time `json:"available_on"`         // available_on
 	ProductLength      float64   `json:"product_length"`       // product_length
-	UpdatedOn          NullTime  `json:"updated_on"`           // updated_on
+	UpdatedOn          *NullTime `json:"updated_on"`           // updated_on
 	SKUPrefix          string    `json:"sku_prefix"`           // sku_prefix
 	PackageHeight      float64   `json:"package_height"`       // package_height
 	ProductWeight      float64   `json:"product_weight"`       // product_weight
@@ -22,7 +22,7 @@ type ProductRoot struct {
 	Brand              string    `json:"brand"`                // brand
 	Subtitle           string    `json:"subtitle"`             // subtitle
 	PackageWeight      float64   `json:"package_weight"`       // package_weight
-	ArchivedOn         NullTime  `json:"archived_on"`          // archived_on
+	ArchivedOn         *NullTime `json:"archived_on"`          // archived_on
 	ID                 uint64    `json:"id"`                   // id
 	PackageWidth       float64   `json:"package_width"`        // package_width
 	Description        string    `json:"description"`          // description
@@ -36,5 +36,5 @@ type ProductRoot struct {
 
 type ProductRootListResponse struct {
 	ListResponse
-	ProductRoots []ProductRoot `json: "product_roots"`
+	ProductRoots []ProductRoot `json:"product_roots"`
 }
