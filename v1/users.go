@@ -19,3 +19,8 @@ type User struct {
 	IsAdmin               bool      `json:"is_admin"`                 // is_admin
 	Password              string    `json:"password"`                 // password
 }
+
+type UserListResponse struct {
+	ListResponse
+	Users []User `json: "users"`
+}

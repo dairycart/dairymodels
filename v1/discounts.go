@@ -21,3 +21,8 @@ type Discount struct {
 	Name          string    `json:"name"`           // name
 	LoginRequired bool      `json:"login_required"` // login_required
 }
+
+type DiscountListResponse struct {
+	ListResponse
+	Discounts []Discount `json: "discounts"`
+}

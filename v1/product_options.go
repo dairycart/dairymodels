@@ -17,6 +17,11 @@ type ProductOption struct {
 	Values []ProductOptionValue `json:"values"`
 }
 
+type ProductOptionListResponse struct {
+	ListResponse
+	ProductOptions []ProductOption `json: "product_options"`
+}
+
 // ProductOptionCreationInput is a struct to use for creating product options
 type ProductOptionCreationInput struct {
 	Name   string   `json:"name"`

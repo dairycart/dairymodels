@@ -11,3 +11,8 @@ type LoginAttempt struct {
 	ID         uint64    `json:"id"`         // id
 	CreatedOn  time.Time `json:"created_on"` // created_on
 }
+
+type LoginAttemptListResponse struct {
+	ListResponse
+	LoginAttempts []LoginAttempt `json: "login_attempts"`
+}

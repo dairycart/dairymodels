@@ -14,3 +14,8 @@ type Webhook struct {
 	CreatedOn   time.Time `json:"created_on"`   // created_on
 	URL         string    `json:"url"`          // url
 }
+
+type WebhookListResponse struct {
+	ListResponse
+	Webhooks []Webhook `json: "webhooks"`
+}

@@ -12,3 +12,8 @@ type WebhookExecutionLog struct {
 	ExecutedOn time.Time `json:"executed_on"` // executed_on
 	WebhookID  uint64    `json:"webhook_id"`  // webhook_id
 }
+
+type WebhookExecutionLogListResponse struct {
+	ListResponse
+	WebhookExecutionLogs []WebhookExecutionLog `json: "webhook_execution_logs"`
+}

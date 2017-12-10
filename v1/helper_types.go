@@ -54,10 +54,9 @@ func (nt *NullTime) UnmarshalText(text []byte) (err error) {
 // ListResponse is a generic list response struct containing values that represent
 // pagination, meant to be embedded into other object response structs
 type ListResponse struct {
-	Count uint64      `json:"count"`
-	Limit uint8       `json:"limit"`
-	Page  uint64      `json:"page"`
-	Data  interface{} `json:"data"`
+	Count uint64 `json:"count"`
+	Limit uint8  `json:"limit"`
+	Page  uint64 `json:"page"`
 }
 
 var _ = error(new(ErrorResponse))

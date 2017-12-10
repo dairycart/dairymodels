@@ -13,3 +13,8 @@ type PasswordResetToken struct {
 	UserID          uint64    `json:"user_id"`           // user_id
 	ExpiresOn       time.Time `json:"expires_on"`        // expires_on
 }
+
+type PasswordResetTokenListResponse struct {
+	ListResponse
+	PasswordResetTokens []PasswordResetToken `json: "password_reset_tokens"`
+}

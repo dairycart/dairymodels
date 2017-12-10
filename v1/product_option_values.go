@@ -13,3 +13,8 @@ type ProductOptionValue struct {
 	UpdatedOn       NullTime  `json:"updated_on"`        // updated_on
 	ProductOptionID uint64    `json:"product_option_id"` // product_option_id
 }
+
+type ProductOptionValueListResponse struct {
+	ListResponse
+	ProductOptionValues []ProductOptionValue `json: "product_option_values"`
+}

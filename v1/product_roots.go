@@ -33,3 +33,8 @@ type ProductRoot struct {
 	Options  []ProductOption `json:"options"`
 	Products []Product       `json:"products"`
 }
+
+type ProductRootListResponse struct {
+	ListResponse
+	ProductRoots []ProductRoot `json: "product_roots"`
+}

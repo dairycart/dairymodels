@@ -45,6 +45,11 @@ type {{ $modelName }} struct {
     {{ end }}
 }
 
+type {{ $modelName }}ListResponse struct {
+    ListResponse
+    {{ $modelName }}s []{{ $modelName }} `json: "{{ snake .Table.Name }}"`
+}
+
 {{ if eq $modelName "Product" }}
 // {{ $modelName }}CreationInput is a struct that represents a product creation body
 type {{ $modelName }}CreationInput struct {

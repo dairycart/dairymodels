@@ -40,6 +40,11 @@ type Product struct {
 	ApplicableOptionValues []ProductOptionValue `json:"applicable_options,omitempty"`
 }
 
+type ProductListResponse struct {
+	ListResponse
+	Products []Product `json: "products"`
+}
+
 // ProductCreationInput is a struct that represents a product creation body
 type ProductCreationInput struct {
 	ProductWidth       float64                      `json:"product_width"`        // product_width

@@ -12,3 +12,8 @@ type ProductVariantBridge struct {
 	CreatedOn            time.Time `json:"created_on"`              // created_on
 	ID                   uint64    `json:"id"`                      // id
 }
+
+type ProductVariantBridgeListResponse struct {
+	ListResponse
+	ProductVariantBridges []ProductVariantBridge `json: "product_variant_bridge"`
+}
