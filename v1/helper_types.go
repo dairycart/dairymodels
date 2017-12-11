@@ -19,13 +19,12 @@ const (
 
 // Dairytime is a custom time pointer struct that should interface well with Postgres's time type and allow for easily nullable time
 type Dairytime struct {
-	*time.Time
+	time.Time
 }
 
 // Scan implements the Scanner interface.
 func (dt *Dairytime) Scan(value interface{}) error {
-	t, _ := value.(time.Time)
-	dt.Time = &t
+	dt.Time, _ = value.(time.Time)
 	return nil
 }
 
@@ -36,9 +35,6 @@ func (dt Dairytime) Value() (driver.Value, error) {
 
 // MarshalText satisfies the encoding.TestMarshaler interface
 func (dt Dairytime) MarshalText() ([]byte, error) {
-	if dt.Time == nil {
-		return nil, nil
-	}
 	if dt.Time.IsZero() {
 		return nil, nil
 	}
@@ -51,12 +47,14 @@ func (dt Dairytime) MarshalText() ([]byte, error) {
 
 // UnmarshalText is a function which unmarshals a NullTime
 func (dt *Dairytime) UnmarshalText(text []byte) (err error) {
+	if text == nil {
+		return nil
+	}
 	if len(text) == 0 {
 		return nil
 	}
 
-	t, _ := time.Parse(timeLayout, string(text))
-	dt.Time = &t
+	dt.Time, _ = time.Parse(timeLayout, string(text))
 	return nil
 }
 
