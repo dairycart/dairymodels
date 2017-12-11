@@ -1,15 +1,18 @@
 package models
 
-import (
-	"time"
-)
-
 // LoginAttempt represents a Dairycart login attempt
 type LoginAttempt struct {
-	Username   string    `json:"username"`   // username
-	Successful bool      `json:"successful"` // successful
-	ID         uint64    `json:"id"`         // id
-	CreatedOn  time.Time `json:"created_on"` // created_on
+	ID         uint64     `json:"id"`         // id
+	Username   string     `json:"username"`   // username
+	Successful bool       `json:"successful"` // successful
+	CreatedOn  *Dairytime `json:"created_on"` // created_on
+}
+
+type LoginAttemptCreationInput struct {
+	ID         uint64 `json:"id,omitempty"`         // id
+	Username   string `json:"username,omitempty"`   // username
+	Successful bool   `json:"successful,omitempty"` // successful
+
 }
 
 type LoginAttemptListResponse struct {

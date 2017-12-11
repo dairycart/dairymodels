@@ -1,17 +1,20 @@
 package models
 
-import (
-	"time"
-)
-
 // ProductOptionValue represents a Dairycart product option value
 type ProductOptionValue struct {
-	Value           string    `json:"value"`             // value
-	CreatedOn       time.Time `json:"created_on"`        // created_on
-	ID              uint64    `json:"id"`                // id
-	ArchivedOn      *NullTime `json:"archived_on"`       // archived_on
-	UpdatedOn       *NullTime `json:"updated_on"`        // updated_on
-	ProductOptionID uint64    `json:"product_option_id"` // product_option_id
+	ID              uint64     `json:"id"`                // id
+	ProductOptionID uint64     `json:"product_option_id"` // product_option_id
+	Value           string     `json:"value"`             // value
+	CreatedOn       *Dairytime `json:"created_on"`        // created_on
+	UpdatedOn       *Dairytime `json:"updated_on"`        // updated_on
+	ArchivedOn      *Dairytime `json:"archived_on"`       // archived_on
+}
+
+type ProductOptionValueCreationInput struct {
+	ID              uint64 `json:"id,omitempty"`                // id
+	ProductOptionID uint64 `json:"product_option_id,omitempty"` // product_option_id
+	Value           string `json:"value,omitempty"`             // value
+
 }
 
 type ProductOptionValueListResponse struct {

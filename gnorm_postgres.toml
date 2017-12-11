@@ -77,7 +77,7 @@ PostRun = ["gofmt", "-s", "-w", "$GNORMFILE"]
 # of your configuration file.
 # Example for mapping postgres types to Go types:
 [TypeMap]
-"timestamp without time zone" = "time.Time"
+"timestamp without time zone" = "*Dairytime"
 "text" = "string"
 "bigint" = "uint64"
 "bytea" = "[]byte"
@@ -100,7 +100,7 @@ PostRun = ["gofmt", "-s", "-w", "$GNORMFILE"]
 # of your configuration file.
 # Example for mapping postgres types to Go types:
 [NullableTypeMap]
-"timestamp without time zone" = "*NullTime"
+"timestamp without time zone" = "*Dairytime"
 
 # Params contains any data you may want to pass to your templates.  This is a
 # good way to make templates reusable with different configuration values for

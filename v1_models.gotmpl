@@ -3,14 +3,6 @@ package models
 {{ $modelName := pascal (trimSuffix .Table.Name "s") -}}
 {{- $allColumns := join (.Table.Columns.Names.Sprintf "%s") ", " -}}
 
-import(
-    {{ if or (contains $allColumns "archived_on") (contains $allColumns "executed_on") }}
-        "time"
-    {{ else if contains $allColumns "created_on" }}
-        "time"
-    {{ end }}
-)
-
 // {{ $modelName }} represents a Dairycart {{ replace (trimSuffix .Table.Name "s") "_" " " -1 }}
 type {{ $modelName }} struct {
     {{- range .Table.Columns }}
@@ -45,27 +37,35 @@ type {{ $modelName }} struct {
     {{ end }}
 }
 
-type {{ $modelName }}ListResponse struct {
-    ListResponse
-    {{ $modelName }}s []{{ $modelName }} `json:"{{ snake .Table.Name }}"`
-}
-
-{{ if eq $modelName "Product" }}
-// {{ $modelName }}CreationInput is a struct that represents a product creation body
+{{ if ne $modelName "ProductOption" }}
 type {{ $modelName }}CreationInput struct {
     {{- range .Table.Columns }}
-        {{- if contains (pascal .Name) "Quantity" }}
-            {{ pascal .Name }} uint32 `json:"{{ snake .Name }},omitempty"` // {{ .DBName }}
-        {{- else if eq (pascal .Name) "Upc" }}
-            {{ "UPC" }} {{ .Type }} `json:"{{ snake .Name }},omitempty"` // {{ .DBName }}
-        {{- else if eq (pascal .Name) "Sku" }}
-            {{ "SKU" }} {{ .Type }} `json:"{{ snake .Name }},omitempty"` // {{ .DBName }}
-        {{- else if and (and (ne (pascal .Name) "ArchivedOn") (ne (pascal .Name) "ID")) (and (ne (pascal .Name) "CreatedOn") (ne (pascal .Name) "ProductRootID")) }}
-            {{ pascal .Name }} {{ .Type }} `json:"{{ snake .Name }},omitempty"` // {{ .DBName }}
+        {{- $notCreatedOrArchivedOn := (and (ne (pascal .Name ) "ArchivedOn") (ne (pascal .Name ) "CreatedOn")) -}}
+        {{- $notUpdatedOrExecutedOn := (and (ne (pascal .Name ) "UpdatedOn") (ne (pascal .Name ) "ExecutedOn")) -}}
+        {{- if and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn -}}
+            {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
+            {{- if contains (pascal .Name) "Quantity" }}
+                {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Upc" }}
+                {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Sku" }}
+                {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "SkuPrefix" }}
+                {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq .Type "" }}
+                /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                something bad has happened here
+            {{- else }}
+                {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- end -}}
         {{- end }}
-    {{- end -}}
+    {{- end }}
+
+    {{ if eq $modelName "Product" }}
     {{- "\n" -}}
 	Options []ProductOptionCreationInput `json:"options,omitempty"`
+    {{- end }}
 }
 {{ end }}
 
@@ -76,3 +76,8 @@ type ProductOptionCreationInput struct {
 	Values []string `json:"values,omitempty"`
 }
 {{ end }}
+
+type {{ $modelName }}ListResponse struct {
+    ListResponse
+    {{ $modelName }}s []{{ $modelName }} `json:"{{ snake .Table.Name }}"`
+}

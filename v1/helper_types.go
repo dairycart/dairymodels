@@ -1,9 +1,8 @@
 package models
 
 import (
+	"database/sql/driver"
 	"time"
-
-	"github.com/lib/pq"
 )
 
 const (
@@ -18,45 +17,48 @@ const (
 	timeLayout            = "2006-01-02T15:04:05.000000Z"
 )
 
-// Modified from code borrowed from http://stackoverflow.com/questions/32825640/custom-marshaltext-for-golang-sql-null-types
+// Dairytime is a custom time pointer struct that should interface well with Postgres's time type and allow for easily nullable time
+type Dairytime struct {
+	*time.Time
+}
 
-// NullTime is a json.Marshal-able pq.NullTime.
-type NullTime struct {
-	pq.NullTime
+// Scan implements the Scanner interface.
+func (dt *Dairytime) Scan(value interface{}) error {
+	t, _ := value.(time.Time)
+	dt.Time = &t
+	return nil
+}
+
+// Value implements the driver Valuer interface.
+func (dt Dairytime) Value() (driver.Value, error) {
+	return dt.Time, nil
 }
 
 // MarshalText satisfies the encoding.TestMarshaler interface
-func (nt NullTime) MarshalText() ([]byte, error) {
-	if nt.Time.IsZero() {
+func (dt Dairytime) MarshalText() ([]byte, error) {
+	if dt.Time == nil {
 		return nil, nil
 	}
-	if nt.Valid {
-		ft := nt.Time.Format(timeLayout)
-		if ft == "0001-01-01T00:00:00Z" {
-			return nil, nil
-		}
-		return []byte(ft), nil
+	if dt.Time.IsZero() {
+		return nil, nil
 	}
-	return nil, nil
+	ft := dt.Time.Format(timeLayout)
+	if ft == "0001-01-01T00:00:00Z" {
+		return nil, nil
+	}
+	return []byte(ft), nil
 }
 
 // UnmarshalText is a function which unmarshals a NullTime
-func (nt *NullTime) UnmarshalText(text []byte) (err error) {
+func (dt *Dairytime) UnmarshalText(text []byte) (err error) {
 	if len(text) == 0 {
-		nt.Time = time.Time{}
-		nt.Valid = true
 		return nil
 	}
 
 	t, _ := time.Parse(timeLayout, string(text))
-	nt.Time = t
-	nt.Valid = true
+	dt.Time = &t
 	return nil
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-//    ¸,ø¤º°º¤ø,¸¸,ø¤º°   Everything after this point is not borrowed.   °º¤ø,¸¸,ø¤º°º¤ø,¸    //
-////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ListResponse is a generic list response struct containing values that represent
 // pagination, meant to be embedded into other object response structs
