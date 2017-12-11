@@ -24,6 +24,6 @@ type ProductOptionListResponse struct {
 
 // ProductOptionCreationInput is a struct to use for creating product options
 type ProductOptionCreationInput struct {
-	Name   string   `json:"name"`
-	Values []string `json:"values"`
+	Name   string   `json:"name,omitempty"`
+	Values []string `json:"values,omitempty"`
 }
