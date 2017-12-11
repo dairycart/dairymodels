@@ -19,7 +19,6 @@ type Discount struct {
 }
 
 type DiscountCreationInput struct {
-	ID            uint64     `json:"id,omitempty"`             // id
 	Name          string     `json:"name,omitempty"`           // name
 	DiscountType  string     `json:"discount_type,omitempty"`  // discount_type
 	Amount        float64    `json:"amount,omitempty"`         // amount
@@ -30,7 +29,20 @@ type DiscountCreationInput struct {
 	LimitedUse    bool       `json:"limited_use,omitempty"`    // limited_use
 	NumberOfUses  uint64     `json:"number_of_uses,omitempty"` // number_of_uses
 	LoginRequired bool       `json:"login_required,omitempty"` // login_required
+}
 
+// DiscountUpdateInput is a struct to use for updating Discounts
+type DiscountUpdateInput struct {
+	Name          string     `json:"name,omitempty"`           // name
+	DiscountType  string     `json:"discount_type,omitempty"`  // discount_type
+	Amount        float64    `json:"amount,omitempty"`         // amount
+	StartsOn      *Dairytime `json:"starts_on,omitempty"`      // starts_on
+	ExpiresOn     *Dairytime `json:"expires_on,omitempty"`     // expires_on
+	RequiresCode  bool       `json:"requires_code,omitempty"`  // requires_code
+	Code          string     `json:"code,omitempty"`           // code
+	LimitedUse    bool       `json:"limited_use,omitempty"`    // limited_use
+	NumberOfUses  uint64     `json:"number_of_uses,omitempty"` // number_of_uses
+	LoginRequired bool       `json:"login_required,omitempty"` // login_required
 }
 
 type DiscountListResponse struct {

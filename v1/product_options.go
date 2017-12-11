@@ -19,6 +19,12 @@ type ProductOptionCreationInput struct {
 	Values []string `json:"values,omitempty"`
 }
 
+// ProductOptionUpdateInput is a struct to use for updating ProductOptions
+type ProductOptionUpdateInput struct {
+	Name          string `json:"name,omitempty"`            // name
+	ProductRootID uint64 `json:"product_root_id,omitempty"` // product_root_id
+}
+
 type ProductOptionListResponse struct {
 	ListResponse
 	ProductOptions []ProductOption `json:"product_options"`

@@ -12,11 +12,16 @@ type Webhook struct {
 }
 
 type WebhookCreationInput struct {
-	ID          uint64 `json:"id,omitempty"`           // id
 	URL         string `json:"url,omitempty"`          // url
 	EventType   string `json:"event_type,omitempty"`   // event_type
 	ContentType string `json:"content_type,omitempty"` // content_type
+}
 
+// WebhookUpdateInput is a struct to use for updating Webhooks
+type WebhookUpdateInput struct {
+	URL         string `json:"url,omitempty"`          // url
+	EventType   string `json:"event_type,omitempty"`   // event_type
+	ContentType string `json:"content_type,omitempty"` // content_type
 }
 
 type WebhookListResponse struct {

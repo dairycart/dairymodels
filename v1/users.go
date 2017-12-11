@@ -16,17 +16,24 @@ type User struct {
 	ArchivedOn            *Dairytime `json:"archived_on"`              // archived_on
 }
 
+// UserCreationInput is a struct to use for creating product options
 type UserCreationInput struct {
-	ID                    uint64     `json:"id,omitempty"`                       // id
-	FirstName             string     `json:"first_name,omitempty"`               // first_name
-	LastName              string     `json:"last_name,omitempty"`                // last_name
-	Username              string     `json:"username,omitempty"`                 // username
-	Email                 string     `json:"email,omitempty"`                    // email
-	Password              string     `json:"password,omitempty"`                 // password
-	Salt                  []byte     `json:"salt,omitempty"`                     // salt
-	IsAdmin               bool       `json:"is_admin,omitempty"`                 // is_admin
-	PasswordLastChangedOn *Dairytime `json:"password_last_changed_on,omitempty"` // password_last_changed_on
+	FirstName string `json:"first_name,omitempty"` // first_name
+	LastName  string `json:"last_name,omitempty"`  // last_name
+	Username  string `json:"username,omitempty"`   // username
+	Email     string `json:"email,omitempty"`      // email
+	Password  string `json:"password,omitempty"`   // password
+	IsAdmin   bool   `json:"is_admin,omitempty"`   // is_admin
+}
 
+// UserUpdateInput is a struct to use for updating Users
+type UserUpdateInput struct {
+	FirstName string `json:"first_name,omitempty"` // first_name
+	LastName  string `json:"last_name,omitempty"`  // last_name
+	Username  string `json:"username,omitempty"`   // username
+	Email     string `json:"email,omitempty"`      // email
+	Password  string `json:"password,omitempty"`   // password
+	IsAdmin   bool   `json:"is_admin,omitempty"`   // is_admin
 }
 
 type UserListResponse struct {

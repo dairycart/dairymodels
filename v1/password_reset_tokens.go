@@ -10,15 +10,6 @@ type PasswordResetToken struct {
 	PasswordResetOn *Dairytime `json:"password_reset_on"` // password_reset_on
 }
 
-type PasswordResetTokenCreationInput struct {
-	ID              uint64     `json:"id,omitempty"`                // id
-	UserID          uint64     `json:"user_id,omitempty"`           // user_id
-	Token           string     `json:"token,omitempty"`             // token
-	ExpiresOn       *Dairytime `json:"expires_on,omitempty"`        // expires_on
-	PasswordResetOn *Dairytime `json:"password_reset_on,omitempty"` // password_reset_on
-
-}
-
 type PasswordResetTokenListResponse struct {
 	ListResponse
 	PasswordResetTokens []PasswordResetToken `json:"password_reset_tokens"`

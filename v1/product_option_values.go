@@ -11,10 +11,14 @@ type ProductOptionValue struct {
 }
 
 type ProductOptionValueCreationInput struct {
-	ID              uint64 `json:"id,omitempty"`                // id
 	ProductOptionID uint64 `json:"product_option_id,omitempty"` // product_option_id
 	Value           string `json:"value,omitempty"`             // value
+}
 
+// ProductOptionValueUpdateInput is a struct to use for updating ProductOptionValues
+type ProductOptionValueUpdateInput struct {
+	ProductOptionID uint64 `json:"product_option_id,omitempty"` // product_option_id
+	Value           string `json:"value,omitempty"`             // value
 }
 
 type ProductOptionValueListResponse struct {

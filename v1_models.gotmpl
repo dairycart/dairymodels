@@ -37,12 +37,13 @@ type {{ $modelName }} struct {
     {{ end }}
 }
 
-{{ if ne $modelName "ProductOption" }}
+{{ if and (and (ne $modelName "ProductOption") (ne $modelName "User")) (ne $modelName "PasswordResetToken") }}
 type {{ $modelName }}CreationInput struct {
     {{- range .Table.Columns }}
+        {{- $notID := (and (ne (pascal .Name ) "ID") (ne (pascal .Name ) "ID")) -}}
         {{- $notCreatedOrArchivedOn := (and (ne (pascal .Name ) "ArchivedOn") (ne (pascal .Name ) "CreatedOn")) -}}
         {{- $notUpdatedOrExecutedOn := (and (ne (pascal .Name ) "UpdatedOn") (ne (pascal .Name ) "ExecutedOn")) -}}
-        {{- if and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn -}}
+        {{- if and (and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn) $notID -}}
             {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
             {{- if contains (pascal .Name) "Quantity" }}
                 {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
@@ -62,7 +63,7 @@ type {{ $modelName }}CreationInput struct {
         {{- end }}
     {{- end }}
 
-    {{ if eq $modelName "Product" }}
+    {{- if eq $modelName "Product" }}
     {{- "\n" -}}
 	Options []ProductOptionCreationInput `json:"options,omitempty"`
     {{- end }}
@@ -70,10 +71,98 @@ type {{ $modelName }}CreationInput struct {
 {{ end }}
 
 {{ if eq $modelName "ProductOption" }}
-// ProductOptionCreationInput is a struct to use for creating product options
-type ProductOptionCreationInput struct {
+// {{ $modelName }}CreationInput is a struct to use for creating product options
+type {{ $modelName }}CreationInput struct {
 	Name   string   `json:"name,omitempty"`
 	Values []string `json:"values,omitempty"`
+}
+{{ end }}
+
+{{ if and (ne $modelName "PasswordResetToken") (ne $modelName "User") }}
+// {{ $modelName }}UpdateInput is a struct to use for updating {{ $modelName }}s
+type {{ $modelName }}UpdateInput struct {
+    {{- range .Table.Columns }}
+        {{- $notID := (and (ne (pascal .Name ) "ID") (ne (pascal .Name ) "ID")) -}}
+        {{- $notCreatedOrArchivedOn := (and (ne (pascal .Name ) "ArchivedOn") (ne (pascal .Name ) "CreatedOn")) -}}
+        {{- $notUpdatedOrExecutedOn := (and (ne (pascal .Name ) "UpdatedOn") (ne (pascal .Name ) "ExecutedOn")) -}}
+        {{- if and (and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn) $notID -}}
+            {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
+            {{- if contains (pascal .Name) "Quantity" }}
+                {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Upc" }}
+                {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Sku" }}
+                {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "SkuPrefix" }}
+                {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if and (eq $modelName "PasswordResetToken") (eq (pascal .Name) "ExpiresOn") }}
+            {{- else if eq .Type "" }}
+                /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                something bad has happened here
+            {{- else }}
+                {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- end -}}
+        {{- end }}
+    {{- end }}
+}
+{{ end }}
+
+{{ if eq $modelName "User" }}
+// {{ $modelName }}CreationInput is a struct to use for creating product options
+type {{ $modelName }}CreationInput struct {
+        {{- range .Table.Columns }}
+        {{- $notID := ne (pascal .Name ) "ID" -}}
+        {{- $notSaltOrPasswordLastChangedOn := (and (ne (pascal .Name ) "Salt") (ne (pascal .Name ) "PasswordLastChangedOn")) -}}
+        {{- $notCreatedOrArchivedOn := (and (ne (pascal .Name ) "ArchivedOn") (ne (pascal .Name ) "CreatedOn")) -}}
+        {{- $notUpdatedOrExecutedOn := (and (ne (pascal .Name ) "UpdatedOn") (ne (pascal .Name ) "ExecutedOn")) -}}
+        {{- if and (and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn) (and $notID $notSaltOrPasswordLastChangedOn) -}}
+            {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
+            {{- if contains (pascal .Name) "Quantity" }}
+                {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Upc" }}
+                {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Sku" }}
+                {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "SkuPrefix" }}
+                {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq .Type "" }}
+                /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                something bad has happened here
+            {{- else }}
+                {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- end -}}
+        {{- end }}
+    {{- end }}
+}
+
+// {{ $modelName }}UpdateInput is a struct to use for updating {{ $modelName }}s
+type {{ $modelName }}UpdateInput struct {
+    {{- range .Table.Columns }}
+        {{- $notID := ne (pascal .Name ) "ID" -}}
+        {{- $notSaltOrPasswordLastChangedOn := (and (ne (pascal .Name ) "Salt") (ne (pascal .Name ) "PasswordLastChangedOn")) -}}
+        {{- $notCreatedOrArchivedOn := (and (ne (pascal .Name ) "ArchivedOn") (ne (pascal .Name ) "CreatedOn")) -}}
+        {{- $notUpdatedOrExecutedOn := (and (ne (pascal .Name ) "UpdatedOn") (ne (pascal .Name ) "ExecutedOn")) -}}
+        {{- if and (and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn) (and $notID $notSaltOrPasswordLastChangedOn) -}}
+            {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
+            {{- if contains (pascal .Name) "Quantity" }}
+                {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Upc" }}
+                {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Sku" }}
+                {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "SkuPrefix" }}
+                {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq .Type "" }}
+                /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                something bad has happened here
+            {{- else }}
+                {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- end -}}
+        {{- end }}
+    {{- end }}
 }
 {{ end }}
 

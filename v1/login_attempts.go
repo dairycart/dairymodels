@@ -9,10 +9,14 @@ type LoginAttempt struct {
 }
 
 type LoginAttemptCreationInput struct {
-	ID         uint64 `json:"id,omitempty"`         // id
 	Username   string `json:"username,omitempty"`   // username
 	Successful bool   `json:"successful,omitempty"` // successful
+}
 
+// LoginAttemptUpdateInput is a struct to use for updating LoginAttempts
+type LoginAttemptUpdateInput struct {
+	Username   string `json:"username,omitempty"`   // username
+	Successful bool   `json:"successful,omitempty"` // successful
 }
 
 type LoginAttemptListResponse struct {
