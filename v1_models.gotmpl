@@ -118,15 +118,7 @@ type {{ $modelName }}CreationInput struct {
         {{- $notUpdatedOrExecutedOn := (and (ne (pascal .Name ) "UpdatedOn") (ne (pascal .Name ) "ExecutedOn")) -}}
         {{- if and (and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn) (and $notID $notSaltOrPasswordLastChangedOn) -}}
             {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
-            {{- if contains (pascal .Name) "Quantity" }}
-                {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
-            {{- else if eq (pascal .Name) "Upc" }}
-                {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- else if eq (pascal .Name) "Sku" }}
-                {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- else if eq (pascal .Name) "SkuPrefix" }}
-                {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- else if eq .Type "" }}
+            {{- if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
                 ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
                 something bad has happened here
@@ -146,14 +138,9 @@ type {{ $modelName }}UpdateInput struct {
         {{- $notUpdatedOrExecutedOn := (and (ne (pascal .Name ) "UpdatedOn") (ne (pascal .Name ) "ExecutedOn")) -}}
         {{- if and (and $notCreatedOrArchivedOn $notUpdatedOrExecutedOn) (and $notID $notSaltOrPasswordLastChangedOn) -}}
             {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
-            {{- if contains (pascal .Name) "Quantity" }}
-                {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
-            {{- else if eq (pascal .Name) "Upc" }}
-                {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- else if eq (pascal .Name) "Sku" }}
-                {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- else if eq (pascal .Name) "SkuPrefix" }}
-                {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- if eq (pascal .Name) "Password" }}
+                New{{ pascal .Name }} {{ .Type }} `json:"new_{{ snake .Name }},omitempty"` // {{ .DBName }}
+                Current{{ pascal .Name }} {{ .Type }} `json:"current_{{ snake .Name }},omitempty"` // {{ .DBName }}
             {{- else if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
                 ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
