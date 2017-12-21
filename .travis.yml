@@ -6,11 +6,11 @@ go:
 before_install:
   # install dep
   - go get -u github.com/golang/dep/cmd/dep
-  - dep ensure -v
   # install goveralls
   - go get github.com/mattn/goveralls
 
 script:
+  - dep ensure -v
   - go test github.com/dairycart/dairymodels/v1 -coverprofile=coverage.out
 
 after_success:
