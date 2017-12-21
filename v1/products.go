@@ -1,5 +1,9 @@
 package models
 
+import (
+	"time"
+)
+
 // Product represents a Dairycart product
 type Product struct {
 	ID                 uint64     `json:"id"`                   // id
@@ -27,8 +31,8 @@ type Product struct {
 	PackageWidth       float64    `json:"package_width"`        // package_width
 	PackageLength      float64    `json:"package_length"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package"` // quantity_per_package
-	AvailableOn        *Dairytime `json:"available_on"`         // available_on
-	CreatedOn          *Dairytime `json:"created_on"`           // created_on
+	AvailableOn        time.Time  `json:"available_on"`         // available_on
+	CreatedOn          time.Time  `json:"created_on"`           // created_on
 	UpdatedOn          *Dairytime `json:"updated_on"`           // updated_on
 	ArchivedOn         *Dairytime `json:"archived_on"`          // archived_on
 
@@ -61,7 +65,7 @@ type ProductCreationInput struct {
 	PackageWidth       float64                      `json:"package_width,omitempty"`        // package_width
 	PackageLength      float64                      `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32                       `json:"quantity_per_package,omitempty"` // quantity_per_package
-	AvailableOn        *Dairytime                   `json:"available_on,omitempty"`         // available_on
+	AvailableOn        *Dairytime                   `json:"available_on,omitempty"`         // available_on)
 	Options            []ProductOptionCreationInput `json:"options,omitempty"`
 }
 
@@ -91,7 +95,7 @@ type ProductUpdateInput struct {
 	PackageWidth       float64    `json:"package_width,omitempty"`        // package_width
 	PackageLength      float64    `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package,omitempty"` // quantity_per_package
-	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on
+	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on)
 }
 
 type ProductListResponse struct {

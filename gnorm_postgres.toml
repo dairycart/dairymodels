@@ -77,7 +77,7 @@ PostRun = ["gofmt", "-s", "-w", "$GNORMFILE"]
 # of your configuration file.
 # Example for mapping postgres types to Go types:
 [TypeMap]
-"timestamp without time zone" = "*Dairytime"
+"timestamp without time zone" = "time.Time"
 "text" = "string"
 "bigint" = "uint64"
 "bytea" = "[]byte"

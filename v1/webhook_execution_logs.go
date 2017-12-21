@@ -1,12 +1,16 @@
 package models
 
+import (
+	"time"
+)
+
 // WebhookExecutionLog represents a Dairycart webhook execution log
 type WebhookExecutionLog struct {
-	ID         uint64     `json:"id"`          // id
-	WebhookID  uint64     `json:"webhook_id"`  // webhook_id
-	StatusCode int        `json:"status_code"` // status_code
-	Succeeded  bool       `json:"succeeded"`   // succeeded
-	ExecutedOn *Dairytime `json:"executed_on"` // executed_on
+	ID         uint64    `json:"id"`          // id
+	WebhookID  uint64    `json:"webhook_id"`  // webhook_id
+	StatusCode int       `json:"status_code"` // status_code
+	Succeeded  bool      `json:"succeeded"`   // succeeded
+	ExecutedOn time.Time `json:"executed_on"` // executed_on
 }
 
 type WebhookExecutionLogCreationInput struct {

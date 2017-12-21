@@ -3,23 +3,32 @@ package models
 {{ $modelName := pascal (trimSuffix .Table.Name "s") -}}
 {{- $allColumns := join (.Table.Columns.Names.Sprintf "%s") ", " -}}
 
+import(
+    {{ if or (or (contains $allColumns "created_on") (contains $allColumns "executed_on")) (or (contains $allColumns "started_on") false)  }}
+    "time"
+    {{ end }}
+)
+
 // {{ $modelName }} represents a Dairycart {{ replace (trimSuffix .Table.Name "s") "_" " " -1 }}
 type {{ $modelName }} struct {
     {{- range .Table.Columns }}
+        {{- $jsonTag := printf "`json:\"%s\"`" (snake .Name) }}
         {{- if contains (pascal .Name) "Quantity" }}
-            {{ pascal .Name }} uint32 `json:"{{ snake .Name }}"` // {{ .DBName }}
+            {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
         {{- else if eq (pascal .Name) "Upc" }}
-            {{ "UPC" }} {{ .Type }} `json:"{{ snake .Name }}"` // {{ .DBName }}
+            {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
         {{- else if eq (pascal .Name) "Sku" }}
-            {{ "SKU" }} {{ .Type }} `json:"{{ snake .Name }}"` // {{ .DBName }}
+            {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
         {{- else if eq (pascal .Name) "SkuPrefix" }}
-            {{ "SKUPrefix" }} {{ .Type }} `json:"{{ snake .Name }}"` // {{ .DBName }}
+            {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+        {{- else if or (eq (pascal .Name) "CreatedOn") (eq (pascal .Name) "AvailableOn") }}
+            {{ pascal .Name }} time.Time {{ $jsonTag }} // {{ .DBName }}
         {{- else if eq .Type "" }}
             /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
-            ({{ pascal .Name }} {{ .Type }} `json:"{{ snake .Name }}"` // {{ .DBName }})
+            ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
             something bad has happened here
         {{- else }}
-            {{ pascal .Name }} {{ .Type }} `json:"{{ snake .Name }}"` // {{ .DBName }}
+            {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
         {{- end }}
     {{- end -}}
 
@@ -53,6 +62,8 @@ type {{ $modelName }}CreationInput struct {
                 {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             {{- else if eq (pascal .Name) "SkuPrefix" }}
                 {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if and (eq (pascal .Name) "AvailableOn") (eq $modelName "Product") }}
+                {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }})
             {{- else if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
                 ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
@@ -95,6 +106,8 @@ type {{ $modelName }}UpdateInput struct {
                 {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             {{- else if eq (pascal .Name) "SkuPrefix" }}
                 {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if and (eq (pascal .Name) "AvailableOn") (eq $modelName "Product") }}
+                {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }})
             {{- else if and (eq $modelName "PasswordResetToken") (eq (pascal .Name) "ExpiresOn") }}
             {{- else if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */

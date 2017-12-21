@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql/driver"
+	"errors"
 	"time"
 )
 
@@ -24,7 +25,11 @@ type Dairytime struct {
 
 // Scan implements the Scanner interface.
 func (dt *Dairytime) Scan(value interface{}) error {
-	dt.Time, _ = value.(time.Time)
+	if t, ok := value.(time.Time); !ok {
+		return errors.New("value is not a time.Time")
+	} else {
+		dt.Time = t
+	}
 	return nil
 }
 
