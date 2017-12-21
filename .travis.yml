@@ -10,7 +10,8 @@ before_install:
   - go get github.com/mattn/goveralls
 
 script:
-  - dep ensure -v
+  - ls
+  # - dep ensure -v
   - go test github.com/dairycart/dairymodels/v1 -coverprofile=coverage.out
 
 after_success:
