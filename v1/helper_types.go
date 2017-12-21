@@ -43,11 +43,7 @@ func (dt Dairytime) MarshalText() ([]byte, error) {
 	if dt.Time.IsZero() {
 		return nil, nil
 	}
-	ft := dt.Time.Format(timeLayout)
-	if ft == "0001-01-01T00:00:00Z" {
-		return nil, nil
-	}
-	return []byte(ft), nil
+	return []byte(dt.Time.Format(timeLayout)), nil
 }
 
 // UnmarshalText is a function which unmarshals a NullTime

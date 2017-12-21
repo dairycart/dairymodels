@@ -13,6 +13,7 @@ type WebhookExecutionLog struct {
 	ExecutedOn time.Time `json:"executed_on"` // executed_on
 }
 
+// WebhookExecutionLogCreationInput is a struct to use for creating WebhookExecutionLogs
 type WebhookExecutionLogCreationInput struct {
 	WebhookID  uint64 `json:"webhook_id,omitempty"`  // webhook_id
 	StatusCode int    `json:"status_code,omitempty"` // status_code

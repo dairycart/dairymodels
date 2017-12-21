@@ -40,6 +40,7 @@ type Product struct {
 	ApplicableOptionValues []ProductOptionValue `json:"applicable_options,omitempty"`
 }
 
+// ProductCreationInput is a struct to use for creating Products
 type ProductCreationInput struct {
 	ProductRootID      uint64                       `json:"product_root_id,omitempty"`      // product_root_id
 	Name               string                       `json:"name,omitempty"`                 // name

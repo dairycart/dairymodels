@@ -14,6 +14,7 @@ type ProductOptionValue struct {
 	ArchivedOn      *Dairytime `json:"archived_on"`       // archived_on
 }
 
+// ProductOptionValueCreationInput is a struct to use for creating ProductOptionValues
 type ProductOptionValueCreationInput struct {
 	ProductOptionID uint64 `json:"product_option_id,omitempty"` // product_option_id
 	Value           string `json:"value,omitempty"`             // value

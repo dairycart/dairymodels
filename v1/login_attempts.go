@@ -12,6 +12,7 @@ type LoginAttempt struct {
 	CreatedOn  time.Time `json:"created_on"` // created_on
 }
 
+// LoginAttemptCreationInput is a struct to use for creating LoginAttempts
 type LoginAttemptCreationInput struct {
 	Username   string `json:"username,omitempty"`   // username
 	Successful bool   `json:"successful,omitempty"` // successful

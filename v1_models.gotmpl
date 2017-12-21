@@ -47,6 +47,7 @@ type {{ $modelName }} struct {
 }
 
 {{ if and (and (ne $modelName "ProductOption") (ne $modelName "User")) (ne $modelName "PasswordResetToken") }}
+// {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
 type {{ $modelName }}CreationInput struct {
     {{- range .Table.Columns }}
         {{- $notID := (and (ne (pascal .Name ) "ID") (ne (pascal .Name ) "ID")) -}}
@@ -82,7 +83,7 @@ type {{ $modelName }}CreationInput struct {
 {{ end }}
 
 {{ if eq $modelName "ProductOption" }}
-// {{ $modelName }}CreationInput is a struct to use for creating product options
+// {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
 type {{ $modelName }}CreationInput struct {
 	Name   string   `json:"name,omitempty"`
 	Values []string `json:"values,omitempty"`
@@ -122,7 +123,7 @@ type {{ $modelName }}UpdateInput struct {
 {{ end }}
 
 {{ if eq $modelName "User" }}
-// {{ $modelName }}CreationInput is a struct to use for creating product options
+// {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
 type {{ $modelName }}CreationInput struct {
         {{- range .Table.Columns }}
         {{- $notID := ne (pascal .Name ) "ID" -}}

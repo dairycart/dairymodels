@@ -20,7 +20,7 @@ type User struct {
 	ArchivedOn            *Dairytime `json:"archived_on"`              // archived_on
 }
 
-// UserCreationInput is a struct to use for creating product options
+// UserCreationInput is a struct to use for creating Users
 type UserCreationInput struct {
 	FirstName string `json:"first_name,omitempty"` // first_name
 	LastName  string `json:"last_name,omitempty"`  // last_name

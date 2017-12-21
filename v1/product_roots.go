@@ -34,6 +34,7 @@ type ProductRoot struct {
 	Products []Product       `json:"products"`
 }
 
+// ProductRootCreationInput is a struct to use for creating ProductRoots
 type ProductRootCreationInput struct {
 	Name               string     `json:"name,omitempty"`                 // name
 	Subtitle           string     `json:"subtitle,omitempty"`             // subtitle

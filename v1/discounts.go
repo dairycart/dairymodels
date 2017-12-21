@@ -22,6 +22,7 @@ type Discount struct {
 	ArchivedOn    *Dairytime `json:"archived_on"`    // archived_on
 }
 
+// DiscountCreationInput is a struct to use for creating Discounts
 type DiscountCreationInput struct {
 	Name          string     `json:"name,omitempty"`           // name
 	DiscountType  string     `json:"discount_type,omitempty"`  // discount_type

@@ -13,6 +13,7 @@ type ProductVariantBridge struct {
 	ArchivedOn           *Dairytime `json:"archived_on"`             // archived_on
 }
 
+// ProductVariantBridgeCreationInput is a struct to use for creating ProductVariantBridges
 type ProductVariantBridgeCreationInput struct {
 	ProductID            uint64 `json:"product_id,omitempty"`              // product_id
 	ProductOptionValueID uint64 `json:"product_option_value_id,omitempty"` // product_option_value_id

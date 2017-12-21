@@ -15,6 +15,7 @@ type Webhook struct {
 	ArchivedOn  *Dairytime `json:"archived_on"`  // archived_on
 }
 
+// WebhookCreationInput is a struct to use for creating Webhooks
 type WebhookCreationInput struct {
 	URL         string `json:"url,omitempty"`          // url
 	EventType   string `json:"event_type,omitempty"`   // event_type
