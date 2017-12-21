@@ -62,7 +62,7 @@ type {{ $modelName }}CreationInput struct {
                 {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             {{- else if eq (pascal .Name) "SkuPrefix" }}
                 {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- else if and (eq (pascal .Name) "AvailableOn") (eq $modelName "Product") }}
+            {{- else if or (eq (pascal .Name) "AvailableOn") (eq (pascal .Name) "StartsOn") }}
                 {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }})
             {{- else if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
@@ -106,7 +106,7 @@ type {{ $modelName }}UpdateInput struct {
                 {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             {{- else if eq (pascal .Name) "SkuPrefix" }}
                 {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- else if and (eq (pascal .Name) "AvailableOn") (eq $modelName "Product") }}
+            {{- else if or (eq (pascal .Name) "AvailableOn") (eq (pascal .Name) "StartsOn") }}
                 {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }})
             {{- else if and (eq $modelName "PasswordResetToken") (eq (pascal .Name) "ExpiresOn") }}
             {{- else if eq .Type "" }}
