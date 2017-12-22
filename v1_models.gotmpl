@@ -25,7 +25,7 @@ type {{ $modelName }} struct {
             {{ pascal .Name }} time.Time {{ $jsonTag }} // {{ .DBName }}
         {{- else if eq .Type "" }}
             /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
-            ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+            ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             something bad has happened here
         {{- else }}
             {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
@@ -64,10 +64,10 @@ type {{ $modelName }}CreationInput struct {
             {{- else if eq (pascal .Name) "SkuPrefix" }}
                 {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             {{- else if or (eq (pascal .Name) "AvailableOn") (eq (pascal .Name) "StartsOn") }}
-                {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }})
+                {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }}
             {{- else if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
-                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
                 something bad has happened here
             {{- else }}
                 {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
@@ -76,7 +76,8 @@ type {{ $modelName }}CreationInput struct {
     {{- end }}
 
     {{- if eq $modelName "Product" }}
-    {{- "\n" -}}
+    {{ "\n" -}}
+    Images []ProductImageCreationInput `json:"images,omitempty"`
 	Options []ProductOptionCreationInput `json:"options,omitempty"`
     {{- end }}
 }
@@ -108,11 +109,11 @@ type {{ $modelName }}UpdateInput struct {
             {{- else if eq (pascal .Name) "SkuPrefix" }}
                 {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             {{- else if or (eq (pascal .Name) "AvailableOn") (eq (pascal .Name) "StartsOn") }}
-                {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }})
+                {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }}
             {{- else if and (eq $modelName "PasswordResetToken") (eq (pascal .Name) "ExpiresOn") }}
             {{- else if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
-                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
                 something bad has happened here
             {{- else }}
                 {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
@@ -134,7 +135,7 @@ type {{ $modelName }}CreationInput struct {
             {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
             {{- if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
-                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
                 something bad has happened here
             {{- else }}
                 {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
@@ -157,7 +158,7 @@ type {{ $modelName }}UpdateInput struct {
                 Current{{ pascal .Name }} {{ .Type }} `json:"current_{{ snake .Name }},omitempty"` // {{ .DBName }}
             {{- else if eq .Type "" }}
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
-                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }})
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
                 something bad has happened here
             {{- else }}
                 {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}

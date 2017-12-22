@@ -53,7 +53,7 @@ type ProductRootCreationInput struct {
 	PackageWidth       float64    `json:"package_width,omitempty"`        // package_width
 	PackageLength      float64    `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package,omitempty"` // quantity_per_package
-	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on)
+	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on
 }
 
 // ProductRootUpdateInput is a struct to use for updating ProductRoots
@@ -75,7 +75,7 @@ type ProductRootUpdateInput struct {
 	PackageWidth       float64    `json:"package_width,omitempty"`        // package_width
 	PackageLength      float64    `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package,omitempty"` // quantity_per_package
-	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on)
+	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on
 }
 
 type ProductRootListResponse struct {

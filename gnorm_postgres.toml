@@ -101,6 +101,7 @@ PostRun = ["gofmt", "-s", "-w", "$GNORMFILE"]
 # Example for mapping postgres types to Go types:
 [NullableTypeMap]
 "timestamp without time zone" = "*Dairytime"
+"bigint" = "*uint64"
 
 # Params contains any data you may want to pass to your templates.  This is a
 # good way to make templates reusable with different configuration values for
