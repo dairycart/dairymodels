@@ -8,6 +8,7 @@ import (
 type Product struct {
 	ID                 uint64     `json:"id"`                   // id
 	ProductRootID      uint64     `json:"product_root_id"`      // product_root_id
+	PrimaryImageID     *uint64    `json:"primary_image_id"`     // primary_image_id
 	Name               string     `json:"name"`                 // name
 	Subtitle           string     `json:"subtitle"`             // subtitle
 	Description        string     `json:"description"`          // description
@@ -35,7 +36,6 @@ type Product struct {
 	CreatedOn          time.Time  `json:"created_on"`           // created_on
 	UpdatedOn          *Dairytime `json:"updated_on"`           // updated_on
 	ArchivedOn         *Dairytime `json:"archived_on"`          // archived_on
-	PrimaryImageID     *uint64    `json:"primary_image_id"`     // primary_image_id
 
 	// useful for responses
 	ApplicableOptionValues []ProductOptionValue `json:"applicable_options,omitempty"`
@@ -44,6 +44,7 @@ type Product struct {
 // ProductCreationInput is a struct to use for creating Products
 type ProductCreationInput struct {
 	ProductRootID      uint64     `json:"product_root_id,omitempty"`      // product_root_id
+	PrimaryImageID     *uint64    `json:"primary_image_id,omitempty"`     // primary_image_id
 	Name               string     `json:"name,omitempty"`                 // name
 	Subtitle           string     `json:"subtitle,omitempty"`             // subtitle
 	Description        string     `json:"description,omitempty"`          // description
@@ -68,7 +69,6 @@ type ProductCreationInput struct {
 	PackageLength      float64    `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package,omitempty"` // quantity_per_package
 	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on
-	PrimaryImageID     *uint64    `json:"primary_image_id,omitempty"`     // primary_image_id
 
 	Images  []ProductImageCreationInput  `json:"images,omitempty"`
 	Options []ProductOptionCreationInput `json:"options,omitempty"`
@@ -77,6 +77,7 @@ type ProductCreationInput struct {
 // ProductUpdateInput is a struct to use for updating Products
 type ProductUpdateInput struct {
 	ProductRootID      uint64     `json:"product_root_id,omitempty"`      // product_root_id
+	PrimaryImageID     *uint64    `json:"primary_image_id,omitempty"`     // primary_image_id
 	Name               string     `json:"name,omitempty"`                 // name
 	Subtitle           string     `json:"subtitle,omitempty"`             // subtitle
 	Description        string     `json:"description,omitempty"`          // description
@@ -101,7 +102,6 @@ type ProductUpdateInput struct {
 	PackageLength      float64    `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package,omitempty"` // quantity_per_package
 	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on
-	PrimaryImageID     *uint64    `json:"primary_image_id,omitempty"`     // primary_image_id
 }
 
 type ProductListResponse struct {

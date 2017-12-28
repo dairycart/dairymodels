@@ -124,21 +124,8 @@ type {{ $modelName }}UpdateInput struct {
 {{ if eq $modelName "ProductImage" }}
 // {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
 type {{ $modelName }}CreationInput struct {
-        {{- range .Table.Columns }}
-        {{- $notID := ne (pascal .Name ) "ID" -}}
-        {{- $notATimeField := and (and (ne (pascal .Name) "ArchivedOn") (ne (pascal .Name) "CreatedOn")) (ne (pascal .Name) "UpdatedOn") -}}
-        {{- $notIgnorableURLField := not (and (contains (pascal .Name) "URL") (ne (pascal .Name) "SourceURL")) -}}
-        {{- if and $notATimeField $notID -}}
-            {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
-            {{- if eq .Type "" }}
-                /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
-                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-                something bad has happened here
-            {{- else if $notIgnorableURLField }}
-                {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
-            {{- end -}}
-        {{- end }}
-    {{- end }}
+    Type string `json:"type"`
+    Data string `json:"data"`
 }
 
 // {{ $modelName }}UpdateInput is a struct to use for updating {{ $modelName }}s

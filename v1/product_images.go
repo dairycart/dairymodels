@@ -19,8 +19,8 @@ type ProductImage struct {
 
 // ProductImageCreationInput is a struct to use for creating ProductImages
 type ProductImageCreationInput struct {
-	ProductID uint64 `json:"product_id,omitempty"` // product_id
-	SourceURL string `json:"source_url,omitempty"` // source_url
+	Type string `json:"type"`
+	Data string `json:"data"`
 }
 
 // ProductImageUpdateInput is a struct to use for updating ProductImages
