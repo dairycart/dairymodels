@@ -38,6 +38,7 @@ type Product struct {
 	ArchivedOn         *Dairytime `json:"archived_on"`          // archived_on
 
 	// useful for responses
+	Images                 []ProductImage       `json:"images"`
 	ApplicableOptionValues []ProductOptionValue `json:"applicable_options,omitempty"`
 }
 

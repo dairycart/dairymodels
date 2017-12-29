@@ -41,6 +41,7 @@ type {{ $modelName }} struct {
         {{ else if eq $modelName "ProductOption" -}}
         Values        []ProductOptionValue `json:"values"`
         {{ else if eq $modelName "Product" -}}
+        Images []ProductImage `json:"images"`
         ApplicableOptionValues []ProductOptionValue `json:"applicable_options,omitempty"`
         {{ end }}
     {{ end }}
