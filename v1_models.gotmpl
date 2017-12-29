@@ -124,8 +124,9 @@ type {{ $modelName }}UpdateInput struct {
 {{ if eq $modelName "ProductImage" }}
 // {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
 type {{ $modelName }}CreationInput struct {
-    Type string `json:"type"`
-    Data string `json:"data"`
+    IsPrimary bool   `json:"is_primary"`
+    Type      string `json:"type"`
+    Data      string `json:"data"`
 }
 
 // {{ $modelName }}UpdateInput is a struct to use for updating {{ $modelName }}s

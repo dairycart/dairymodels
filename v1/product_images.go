@@ -19,8 +19,9 @@ type ProductImage struct {
 
 // ProductImageCreationInput is a struct to use for creating ProductImages
 type ProductImageCreationInput struct {
-	Type string `json:"type"`
-	Data string `json:"data"`
+	IsPrimary bool   `json:"is_primary"`
+	Type      string `json:"type"`
+	Data      string `json:"data"`
 }
 
 // ProductImageUpdateInput is a struct to use for updating ProductImages
