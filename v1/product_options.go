@@ -14,7 +14,7 @@ type ProductOption struct {
 	ArchivedOn    *Dairytime `json:"archived_on"`     // archived_on
 
 	// useful for responses
-	Values []ProductOptionValueCreationInput `json:"values"`
+	Values []ProductOptionValue `json:"values"`
 }
 
 // ProductOptionCreationInput is a struct to use for creating ProductOptions
