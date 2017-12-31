@@ -51,8 +51,7 @@ type {{ $modelName }} struct {
 {{ $isNotUser := ne $modelName "User" }}
 {{ $isNotPasswordResetToken := ne $modelName "PasswordResetToken" }}
 {{ $isNotProductImage := ne $modelName "ProductImage" }}
-{{ $isNotProductOptionValue := ne $modelName "ProductOptionValue" }}
-{{ $canUseNormalCreationInputTemplate := and (and (and $isNotProductOption $isNotUser) (and $isNotPasswordResetToken $isNotProductImage)) $isNotProductOptionValue }}
+{{ $canUseNormalCreationInputTemplate := and (and $isNotProductOption $isNotUser) (and $isNotPasswordResetToken $isNotProductImage) }}
 
 {{ if $canUseNormalCreationInputTemplate }}
 // {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
@@ -85,7 +84,7 @@ type {{ $modelName }}CreationInput struct {
     {{- if eq $modelName "Product" }}
     {{ "\n" -}}
     Images []ProductImageCreationInput `json:"images,omitempty"`
-	Options []ProductOptionCreationInput `json:"options,omitempty"`
+	Options []OptionValueCreationInputForProductCreation `json:"options,omitempty"`
     {{- end }}
 }
 {{ end }}
@@ -99,9 +98,34 @@ type {{ $modelName }}CreationInput struct {
 {{ end }}
 
 
-{{ if eq $modelName "ProductOptionValue" }}
-// {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
-type {{ $modelName }}CreationInput struct {
+{{ if eq $modelName "Product" }}
+// OptionValueCreationInputForProductCreation is a struct to use for associating ProductOptionValues with a new Product
+type OptionValueCreationInputForProductCreation struct {
+    {{- range .Table.Columns }}
+        {{- $notID := not (contains (pascal .Name) "ID") -}}
+        {{- $notATimeField := and (and (ne (pascal .Name) "ArchivedOn") (ne (pascal .Name) "CreatedOn")) (and (ne (pascal .Name) "ExecutedOn") (ne (pascal .Name) "UpdatedOn")) -}}
+        {{- if and $notATimeField $notID -}}
+            {{ $jsonTag := printf "`json:\"%s,omitempty\"`" (snake .Name) }}
+            {{- if contains (pascal .Name) "Quantity" }}
+                {{ pascal .Name }} uint32 {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Upc" }}
+                {{ "UPC" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "Sku" }}
+                {{ "SKU" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq (pascal .Name) "SkuPrefix" }}
+                {{ "SKUPrefix" }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- else if or (eq (pascal .Name) "AvailableOn") (eq (pascal .Name) "StartsOn") }}
+                {{ pascal .Name }} *Dairytime {{ $jsonTag }} // {{ .DBName }}
+            {{- else if eq .Type "" }}
+                /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
+                ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+                something bad has happened here
+            {{- else }}
+                {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
+            {{- end -}}
+        {{- end }}
+    {{- end }}
+
 	ProductOptionID uint64                      `json:"product_option_id,omitempty"` // product_option_id
 	Value           string                      `json:"value,omitempty"`             // value
     Images          []ProductImageCreationInput `json:"images,omitempty"`
