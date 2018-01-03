@@ -31,6 +31,7 @@ type ProductRoot struct {
 
 	// useful for responses
 	Options  []ProductOption `json:"options"`
+	Images   []ProductImage  `json:"images"`
 	Products []Product       `json:"products"`
 }
 

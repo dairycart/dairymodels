@@ -37,7 +37,8 @@ type {{ $modelName }} struct {
     // useful for responses
         {{ if eq $modelName "ProductRoot" -}}
         Options  []ProductOption `json:"options"`
-        Products []Product        `json:"products"`
+        Images   []ProductImage  `json:"images"`
+        Products []Product       `json:"products"`
         {{ else if eq $modelName "ProductOption" -}}
         Values        []ProductOptionValue `json:"values"`
         {{ else if eq $modelName "Product" -}}
