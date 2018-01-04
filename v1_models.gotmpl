@@ -52,8 +52,7 @@ type {{ $modelName }} struct {
 {{ $isNotUser := ne $modelName "User" }}
 {{ $isNotPasswordResetToken := ne $modelName "PasswordResetToken" }}
 {{ $isNotProductImage := ne $modelName "ProductImage" }}
-{{ $isNotProductOptionValue := ne $modelName "ProductOptionValue" }}
-{{ $canUseNormalCreationInputTemplate := and (and (and $isNotProductOption $isNotUser) (and $isNotPasswordResetToken $isNotProductImage)) $isNotProductOptionValue }}
+{{ $canUseNormalCreationInputTemplate := and (and $isNotProductOption $isNotUser) (and $isNotPasswordResetToken $isNotProductImage) }}
 
 {{ if $canUseNormalCreationInputTemplate }}
 // {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
@@ -95,17 +94,7 @@ type {{ $modelName }}CreationInput struct {
 // {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
 type {{ $modelName }}CreationInput struct {
 	Name   string   `json:"name,omitempty"`
-	Values []ProductOptionValueCreationInput `json:"values,omitempty"`
-}
-{{ end }}
-
-
-{{ if eq $modelName "ProductOptionValue" }}
-// {{ $modelName }}CreationInput is a struct to use for creating {{ $modelName }}s
-type {{ $modelName }}CreationInput struct {
-	ProductOptionID uint64                      `json:"product_option_id,omitempty"` // product_option_id
-	Value           string                      `json:"value,omitempty"`             // value
-    Images          []ProductImageCreationInput `json:"images,omitempty"`
+	Values []string `json:"values,omitempty"`
 }
 {{ end }}
 
