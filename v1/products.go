@@ -44,8 +44,6 @@ type Product struct {
 
 // ProductCreationInput is a struct to use for creating Products
 type ProductCreationInput struct {
-	ProductRootID      uint64     `json:"product_root_id,omitempty"`      // product_root_id
-	PrimaryImageID     *uint64    `json:"primary_image_id,omitempty"`     // primary_image_id
 	Name               string     `json:"name,omitempty"`                 // name
 	Subtitle           string     `json:"subtitle,omitempty"`             // subtitle
 	Description        string     `json:"description,omitempty"`          // description

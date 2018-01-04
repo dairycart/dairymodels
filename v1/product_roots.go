@@ -8,6 +8,7 @@ import (
 type ProductRoot struct {
 	ID                 uint64     `json:"id"`                   // id
 	Name               string     `json:"name"`                 // name
+	PrimaryImageID     *uint64    `json:"primary_image_id"`     // primary_image_id
 	Subtitle           string     `json:"subtitle"`             // subtitle
 	Description        string     `json:"description"`          // description
 	SKUPrefix          string     `json:"sku_prefix"`           // sku_prefix
@@ -60,6 +61,7 @@ type ProductRootCreationInput struct {
 // ProductRootUpdateInput is a struct to use for updating ProductRoots
 type ProductRootUpdateInput struct {
 	Name               string     `json:"name,omitempty"`                 // name
+	PrimaryImageID     *uint64    `json:"primary_image_id,omitempty"`     // primary_image_id
 	Subtitle           string     `json:"subtitle,omitempty"`             // subtitle
 	Description        string     `json:"description,omitempty"`          // description
 	SKUPrefix          string     `json:"sku_prefix,omitempty"`           // sku_prefix

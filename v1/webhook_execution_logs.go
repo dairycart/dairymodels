@@ -15,9 +15,8 @@ type WebhookExecutionLog struct {
 
 // WebhookExecutionLogCreationInput is a struct to use for creating WebhookExecutionLogs
 type WebhookExecutionLogCreationInput struct {
-	WebhookID  uint64 `json:"webhook_id,omitempty"`  // webhook_id
-	StatusCode int    `json:"status_code,omitempty"` // status_code
-	Succeeded  bool   `json:"succeeded,omitempty"`   // succeeded
+	StatusCode int  `json:"status_code,omitempty"` // status_code
+	Succeeded  bool `json:"succeeded,omitempty"`   // succeeded
 }
 
 // WebhookExecutionLogUpdateInput is a struct to use for updating WebhookExecutionLogs

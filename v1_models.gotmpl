@@ -77,7 +77,7 @@ type {{ $modelName }}CreationInput struct {
                 /* putting this here so that go fmt/build/etc will barf when they encounter it and I'll know to fix it */
                 ({{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
                 something bad has happened here
-            {{- else }}
+            {{- else if not (contains (pascal .Name) "ID")}}
                 {{ pascal .Name }} {{ .Type }} {{ $jsonTag }} // {{ .DBName }}
             {{- end -}}
         {{- end }}

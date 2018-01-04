@@ -9,8 +9,6 @@ type ProductImageBridge struct {
 
 // ProductImageBridgeCreationInput is a struct to use for creating ProductImageBridges
 type ProductImageBridgeCreationInput struct {
-	ProductID      uint64 `json:"product_id,omitempty"`       // product_id
-	ProductImageID uint64 `json:"product_image_id,omitempty"` // product_image_id
 }
 
 // ProductImageBridgeUpdateInput is a struct to use for updating ProductImageBridges
