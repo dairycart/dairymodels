@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql/driver"
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -57,6 +58,15 @@ func (dt *Dairytime) UnmarshalText(text []byte) (err error) {
 
 	dt.Time, _ = time.Parse(timeLayout, string(text))
 	return nil
+}
+
+var _ fmt.Stringer = (*Dairytime)(nil)
+
+func (dt *Dairytime) String() string {
+	if dt == nil {
+		return "nil"
+	}
+	return dt.Time.Format(timeLayout)
 }
 
 // ListResponse is a generic list response struct containing values that represent

@@ -8,6 +8,7 @@ import (
 type ProductRoot struct {
 	ID                 uint64     `json:"id"`                   // id
 	Name               string     `json:"name"`                 // name
+	PrimaryImageID     *uint64    `json:"primary_image_id"`     // primary_image_id
 	Subtitle           string     `json:"subtitle"`             // subtitle
 	Description        string     `json:"description"`          // description
 	SKUPrefix          string     `json:"sku_prefix"`           // sku_prefix
@@ -31,6 +32,7 @@ type ProductRoot struct {
 
 	// useful for responses
 	Options  []ProductOption `json:"options"`
+	Images   []ProductImage  `json:"images"`
 	Products []Product       `json:"products"`
 }
 
@@ -53,12 +55,13 @@ type ProductRootCreationInput struct {
 	PackageWidth       float64    `json:"package_width,omitempty"`        // package_width
 	PackageLength      float64    `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package,omitempty"` // quantity_per_package
-	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on)
+	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on
 }
 
 // ProductRootUpdateInput is a struct to use for updating ProductRoots
 type ProductRootUpdateInput struct {
 	Name               string     `json:"name,omitempty"`                 // name
+	PrimaryImageID     *uint64    `json:"primary_image_id,omitempty"`     // primary_image_id
 	Subtitle           string     `json:"subtitle,omitempty"`             // subtitle
 	Description        string     `json:"description,omitempty"`          // description
 	SKUPrefix          string     `json:"sku_prefix,omitempty"`           // sku_prefix
@@ -75,7 +78,7 @@ type ProductRootUpdateInput struct {
 	PackageWidth       float64    `json:"package_width,omitempty"`        // package_width
 	PackageLength      float64    `json:"package_length,omitempty"`       // package_length
 	QuantityPerPackage uint32     `json:"quantity_per_package,omitempty"` // quantity_per_package
-	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on)
+	AvailableOn        *Dairytime `json:"available_on,omitempty"`         // available_on
 }
 
 type ProductRootListResponse struct {

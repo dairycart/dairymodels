@@ -16,8 +16,7 @@ type ProductOptionValue struct {
 
 // ProductOptionValueCreationInput is a struct to use for creating ProductOptionValues
 type ProductOptionValueCreationInput struct {
-	ProductOptionID uint64 `json:"product_option_id,omitempty"` // product_option_id
-	Value           string `json:"value,omitempty"`             // value
+	Value string `json:"value,omitempty"` // value
 }
 
 // ProductOptionValueUpdateInput is a struct to use for updating ProductOptionValues

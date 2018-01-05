@@ -33,7 +33,7 @@ type DiscountCreationInput struct {
 	LimitedUse    bool       `json:"limited_use,omitempty"`    // limited_use
 	NumberOfUses  uint64     `json:"number_of_uses,omitempty"` // number_of_uses
 	LoginRequired bool       `json:"login_required,omitempty"` // login_required
-	StartsOn      *Dairytime `json:"starts_on,omitempty"`      // starts_on)
+	StartsOn      *Dairytime `json:"starts_on,omitempty"`      // starts_on
 }
 
 // DiscountUpdateInput is a struct to use for updating Discounts
@@ -47,7 +47,7 @@ type DiscountUpdateInput struct {
 	LimitedUse    bool       `json:"limited_use,omitempty"`    // limited_use
 	NumberOfUses  uint64     `json:"number_of_uses,omitempty"` // number_of_uses
 	LoginRequired bool       `json:"login_required,omitempty"` // login_required
-	StartsOn      *Dairytime `json:"starts_on,omitempty"`      // starts_on)
+	StartsOn      *Dairytime `json:"starts_on,omitempty"`      // starts_on
 }
 
 type DiscountListResponse struct {
