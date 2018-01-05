@@ -17,6 +17,8 @@ const (
 )
 
 func TestDairytimeScan(t *testing.T) {
+	t.Parallel()
+
 	t.Run("with valid value", func(_t *testing.T) {
 		_t.Parallel()
 
@@ -36,6 +38,8 @@ func TestDairytimeScan(t *testing.T) {
 }
 
 func TestDairytimeValue(t *testing.T) {
+	t.Parallel()
+
 	t.Run("with valid value", func(_t *testing.T) {
 		_t.Parallel()
 
@@ -51,6 +55,8 @@ func TestDairytimeValue(t *testing.T) {
 }
 
 func TestDairytimeMarshalText(t *testing.T) {
+	t.Parallel()
+
 	t.Run("normal operation", func(_t *testing.T) {
 		_t.Parallel()
 
@@ -77,6 +83,8 @@ func TestDairytimeMarshalText(t *testing.T) {
 }
 
 func TestDairytimeUnmarshalText(t *testing.T) {
+	t.Parallel()
+
 	t.Run("normal operation", func(_t *testing.T) {
 		_t.Parallel()
 
@@ -103,7 +111,34 @@ func TestDairytimeUnmarshalText(t *testing.T) {
 	})
 }
 
+func TestDairytimeString(t *testing.T) {
+	t.Parallel()
+
+	t.Run("normal operation", func(_t *testing.T) {
+		_t.Parallel()
+
+		test, err := time.Parse("2006-01-02 03:04:00.000000", exampleTimeString)
+		require.Nil(t, err)
+
+		dt := &Dairytime{test}
+		expected := "2016-12-31T12:00:00.000000Z"
+		actual := dt.String()
+		assert.Equal(t, expected, actual)
+	})
+
+	t.Run("with nil", func(_t *testing.T) {
+		_t.Parallel()
+
+		dt := (*Dairytime)(nil)
+		expected := "nil"
+		actual := dt.String()
+		assert.Equal(t, expected, actual)
+	})
+}
+
 func TestErrorResponseError(t *testing.T) {
+	t.Parallel()
+
 	t.Run("normal operation", func(_t *testing.T) {
 		_t.Parallel()
 
